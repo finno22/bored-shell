@@ -17,7 +17,7 @@ public class BoredShellCommands {
     }
 
     @ShellMethod(value = "Get an activity", key = "get")
-    public String get(@ShellOption(defaultValue = ShellOption.NULL) String type) {
+    public String get(@ShellOption(defaultValue = ShellOption.NULL, valueProvider = ActivityTypeValueProvider.class) String type) {
         try{
             Activity activity = boredApiClient.retrieveRandomActivity(type);
             return activity.get();
