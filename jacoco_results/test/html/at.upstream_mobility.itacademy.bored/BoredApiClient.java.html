@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoredApiClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bored</a> &gt; <a href="index.source.html" class="el_package">at.upstream_mobility.itacademy.bored</a> &gt; <span class="el_source">BoredApiClient.java</span></div><h1>BoredApiClient.java</h1><pre class="source lang-java linenums">package at.upstream_mobility.itacademy.bored;
+
+import org.springframework.web.reactive.function.client.WebClient;
+
+import at.upstream_mobility.itacademy.bored.exception.InvalidActivityTypeException;
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+
+import reactor.core.publisher.Mono;
+
+@Component
+<span class="fc" id="L13">public class BoredApiClient {</span>
+<span class="fc" id="L14">    WebClient client = WebClient.create(&quot;https://bored.api.lewagon.com/api&quot;);</span>
+
+    public String buildURI(String type) throws InvalidActivityTypeException{
+<span class="fc" id="L17">        String uri = &quot;/activity&quot;;</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if(type != null){</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">            if(!Activity.VALID_TYPES.contains(type)){</span>
+<span class="fc" id="L20">                throw new InvalidActivityTypeException(&quot;ERROR: Invalid activity type &quot; + type + &quot; was provdided.&quot;);</span>
+            }
+<span class="fc" id="L22">            uri += &quot;?type=&quot; + type;</span>
+        }
+<span class="fc" id="L24">        return uri;</span>
+    }
+    
+    public Activity retrieveRandomActivity(String type) throws InvalidActivityTypeException{ //TODO handle endpoint not available
+<span class="fc" id="L28">        String uri = buildURI(type);</span>
+<span class="fc" id="L29">        return this.retrieve(uri);</span>
+    }
+
+    public Activity retrieve(String uri){
+<span class="fc" id="L33">        Mono&lt;Activity&gt; result = client.get()</span>
+<span class="fc" id="L34">		.uri(uri).accept(MediaType.APPLICATION_JSON)</span>
+<span class="fc" id="L35">		.retrieve()</span>
+<span class="fc" id="L36">		.bodyToMono(Activity.class);</span>
+
+<span class="fc" id="L38">        return result.block();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
