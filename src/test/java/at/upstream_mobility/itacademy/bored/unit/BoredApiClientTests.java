@@ -49,6 +49,13 @@ public class BoredApiClientTests {
         assertEquals(NUM_VALID_ACTIVITY_TYPES, validActivityTypes.size());
         assertTrue(validActivityTypes.contains("education"));
         assertTrue(validActivityTypes.contains("recreational"));
+        assertTrue(validActivityTypes.contains("charity"));
+        assertTrue(validActivityTypes.contains("cooking"));
+        assertTrue(validActivityTypes.contains("social"));
+        assertTrue(validActivityTypes.contains("diy"));
+        assertTrue(validActivityTypes.contains("relaxation"));
+        assertTrue(validActivityTypes.contains("music"));
+        assertTrue(validActivityTypes.contains("busywork"));
     }
 
     @Test
